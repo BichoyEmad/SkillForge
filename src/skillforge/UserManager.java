@@ -62,24 +62,24 @@ public class UserManager {
         return SecurityUtil.sha256(password);
     }
 
-    public boolean signupStudent(String username, String email, String password) {
-        if (username == null || email == null || password == null) return false;
-        if (!validEmail(email)) return false;
-        if (findByEmail(email) != null) return false;
+    public Student signupStudent(String username, String email, String password) {
+        if (username == null || email == null || password == null) return null;
+        if (!validEmail(email)) return null;
+        if (findByEmail(email) != null) return null;
         Student s = new Student(username, email, hashPassword(password));
         users.add(s);
         saveUsers();
-        return true;
+        return s;
     }
 
-    public boolean signupInstructor(String username, String email, String password) {
-        if (username == null || email == null || password == null) return false;
-        if (!validEmail(email)) return false;
-        if (findByEmail(email) != null) return false;
+    public Instructor signupInstructor(String username, String email, String password) {
+        if (username == null || email == null || password == null) return null;
+        if (!validEmail(email)) return null;
+        if (findByEmail(email) != null) return null;
         Instructor i = new Instructor(username, email, hashPassword(password));
         users.add(i);
         saveUsers();
-        return true;
+        return i;
     }
 
     public User login(String email, String password) {

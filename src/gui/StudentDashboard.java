@@ -28,7 +28,7 @@ public class StudentDashboard extends JPanel {
         }));
 
         add(GUIHelpers.getFormattedButton("Logout", (ActionEvent e) -> {
-            // Logout
+            mainWindow.setPanel(new WelcomePanel(mainWindow, userManager, courseManager));
         }));
     }
     
