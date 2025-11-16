@@ -68,7 +68,7 @@ public class InstructorDashboard extends JPanel {
         }));
         
         bottomPanel.add(GUIHelpers.getFormattedButton("Logout", (ActionEvent e) -> {
-            // logout
+            // Logout
         }));
 
         add(bottomPanel, BorderLayout.SOUTH);
