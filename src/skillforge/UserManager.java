@@ -1,8 +1,9 @@
 package skillforge;
 
 import com.google.gson.reflect.TypeToken;
-igit add.mport java.lang.reflect.Type;
-import java.util.*;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class UserManager {
@@ -40,14 +41,14 @@ public class UserManager {
             return list;
         } catch (Exception ex) {
             // if file not exists or empty, initialize file
-            JsonUtil.writeList("users.json", new ArrayList<>());
+            JSonUtil.writeList("users.json", new ArrayList<>());
             return new ArrayList<>();
         }
     }
 
     private void saveUsers() {
         // because users is heterogeneous, write as list of Objects
-        JsonUtil.writeList("users.json", users);
+        JSonUtil.writeList("users.json", users);
     }
 
     // Validation simple email regex
