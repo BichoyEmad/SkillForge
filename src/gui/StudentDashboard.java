@@ -3,6 +3,8 @@ package gui;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import javax.swing.BorderFactory;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import skillforge.CourseManager;
 import skillforge.Student;
@@ -13,7 +15,7 @@ public class StudentDashboard extends JPanel {
     
     public StudentDashboard(MainWindow mainWindow, UserManager userManager,
             CourseManager courseManager, Student student) {
-        super(new GridLayout(4, 1, 15, 15));
+        super(new GridLayout(5, 1, 15, 15));
         setBackground(null);
         setBorder(BorderFactory.createEmptyBorder(75, 150, 75, 150));
         
@@ -25,6 +27,14 @@ public class StudentDashboard extends JPanel {
 
         add(GUIHelpers.getFormattedButton("View my Courses", (ActionEvent e) -> {
             mainWindow.setPanel(new ViewStudentCourses(mainWindow, userManager, courseManager, student));
+        }));
+        
+        add(GUIHelpers.getFormattedButton("Certificates", (ActionEvent e) -> {
+            if (student.getCertificates().isEmpty()) {
+                JOptionPane.showMessageDialog(mainWindow, "No certificates.");
+                return;
+            }
+            
         }));
 
         add(GUIHelpers.getFormattedButton("Logout", (ActionEvent e) -> {
