@@ -8,16 +8,15 @@ package skillforge;
  *
  * @author hp
  */
-// JsonUtil.java
+
 import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
 import java.lang.reflect.Type;
 import java.nio.file.*;
 import java.util.*;
 
-public class JSonUtil {
+public class JsonUtil {
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
    
     public static <T> List<T> readList(String path, Type typeOfList) {
