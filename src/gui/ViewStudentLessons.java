@@ -25,7 +25,7 @@ public class ViewStudentLessons extends JPanel {
         LessonsTable lessonsTable = new LessonsTable(mainWindow, c.getLessons(), c, s);
         add(lessonsTable, BorderLayout.CENTER);
 
-        JPanel bottomPanel = new JPanel(new GridLayout(1, 2, 15, 15));
+        JPanel bottomPanel = new JPanel(new GridLayout(1, 3, 15, 15));
         bottomPanel.setBackground(null);
 
         bottomPanel.add(GUIHelpers.getFormattedButton("Back", (ActionEvent e) -> {
@@ -38,9 +38,27 @@ public class ViewStudentLessons extends JPanel {
                 return;
             }
             boolean ok = courseManager.markLessonCompleted(c.getCourseId(),
-                            selectedLesson.getLessonId(), s.getUserId());
+                    selectedLesson.getLessonId(), s.getUserId());
             JOptionPane.showMessageDialog(mainWindow, ok ? "Marked completed." : "Failed.");
             lessonsTable.refreshList(c.getLessons(), c, s);
+        }));
+
+        bottomPanel.add(GUIHelpers.getFormattedButton("Lesson Quiz", (ActionEvent e) -> {
+            Lesson selectedLesson = lessonsTable.getSelected();
+            if (selectedLesson == null) {
+                return;
+            }
+            if (selectedLesson.getQuiz() == null) {
+                JOptionPane.showMessageDialog(mainWindow, "No quiz for this lesson.");
+                return;
+            }
+            int at = s.getAttempts(c.getCourseId(), selectedLesson.getLessonId());
+                if (at >= 2) {
+                    JOptionPane.showMessageDialog(mainWindow, "No attempts left for this lesson");
+                    return;
+                }
+                mainWindow.setPanel(new SolveQuiz(mainWindow, userManager,
+                        courseManager, c, selectedLesson, s, selectedLesson.getQuiz()));
         }));
 
         add(bottomPanel, BorderLayout.SOUTH);

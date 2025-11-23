@@ -8,7 +8,6 @@ package skillforge;
  *
  * @author root
  */
-// User.java
 import java.util.UUID;
 
 public class User {
@@ -41,4 +40,6 @@ public class User {
     public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
     public void setRole(String role) { this.role = role; }
 }
+
+
 

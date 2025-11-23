@@ -1,4 +1,13 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package skillforge;
+
+/**
+ *
+ * @author root
+ */
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
@@ -37,13 +46,13 @@ public class UserManager {
             return list;
         } catch (Exception ex) {
             ex.printStackTrace();
-            JsonUtil.writeList(usersFile, new ArrayList<>());
+            JSonUtil.writeList(usersFile, new ArrayList<>());
             return new ArrayList<>();
         }
     }
 
     private void saveUsers() {
-        JsonUtil.writeList(usersFile, users);
+        JSonUtil.writeList(usersFile, users);
     }
 
     private boolean validEmail(String email) {

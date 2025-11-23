@@ -6,10 +6,8 @@ package skillforge;
 
 /**
  *
- * @author hp
+ * @author root
  */
-
-   
 import java.util.*;
 
 public class Lesson {
@@ -68,3 +66,6 @@ public class Lesson {
         return s;
     }
 }
+
+
+

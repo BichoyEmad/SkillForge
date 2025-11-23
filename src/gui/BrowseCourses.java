@@ -3,10 +3,12 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import skillforge.Course;
+import skillforge.Course.ApprovalStatus;
 import skillforge.CourseManager;
 import skillforge.Student;
 import skillforge.UserManager;
@@ -20,8 +22,11 @@ public class BrowseCourses extends JPanel {
         setBackground(null);
 
         add(GUIHelpers.getFormattedTitle("Browse Courses"), BorderLayout.NORTH);
+        
+        ArrayList<Course> courses = new ArrayList<>(courseManager.listAllCourses());
+        courses.removeIf(c -> c.getApprovalStatus() != ApprovalStatus.APPROVED);
 
-        CoursesTable coursesTable = new CoursesTable(mainWindow, courseManager.listAllCourses());
+        CoursesTable coursesTable = new CoursesTable(mainWindow, courses);
         add(coursesTable, BorderLayout.CENTER);
 
         JPanel bottomPanel = new JPanel(new GridLayout(1, 2, 15, 15));
@@ -42,7 +47,7 @@ public class BrowseCourses extends JPanel {
             );
             JOptionPane.showMessageDialog(
                     mainWindow, ok ? "Enrolled successfully" : "Failed to enroll");
-            coursesTable.refreshList(courseManager.listAllCourses());
+            mainWindow.setPanel(new BrowseCourses(mainWindow, userManager, courseManager, student));
         }));
 
         add(bottomPanel, BorderLayout.SOUTH);

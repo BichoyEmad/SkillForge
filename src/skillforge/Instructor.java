@@ -8,7 +8,6 @@ package skillforge;
  *
  * @author root
  */
-// Instructor.java
 import java.util.*;
 
 public class Instructor extends User {
@@ -35,5 +34,8 @@ public class Instructor extends User {
 
     public List<String> getCreatedCourses() { return createdCourses; }
 }
+
+
+
 
 

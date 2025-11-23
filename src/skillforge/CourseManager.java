@@ -1,5 +1,13 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package skillforge;
 
+/**
+ *
+ * @author root
+ */
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.*;
@@ -19,7 +27,7 @@ public class CourseManager {
 
     private List<Course> loadCourses() {
         try {
-            List<Course> list = JsonUtil.readList(coursesFile, new TypeToken<List<Course>>() {}.getType());
+            List<Course> list = JSonUtil.readList(coursesFile, new TypeToken<List<Course>>() {}.getType());
             return list;
         } catch (Exception e) {
             e.printStackTrace();
@@ -28,9 +36,10 @@ public class CourseManager {
     }
 
     private void saveCourses() {
-        JsonUtil.writeList(coursesFile, courses);
+        JSonUtil.writeList(coursesFile, courses);
     }
 
+    // Course management
     public Course createCourse(String title, String description, String instructorId) {
         User u = userManager.findById(instructorId);
         if (!(u instanceof Instructor)) return null;
@@ -83,6 +92,7 @@ public class CourseManager {
         return true;
     }
 
+    // Lesson management
     public Lesson addLesson(String courseId, String title, String content, String instructorId) {
         Course c = findCourseById(courseId);
         if (c == null || !c.getInstructorId().equals(instructorId)) return null;
@@ -122,7 +132,7 @@ public class CourseManager {
         return true;
     }
 
-
+    // Enrollment
     public boolean enrollStudent(String courseId, String studentId) {
         Course c = findCourseById(courseId);
         if (c == null) return false;
@@ -148,7 +158,7 @@ public class CourseManager {
         return res;
     }
 
-
+    // Mark lesson completed (manual)
     public boolean markLessonCompleted(String courseId, String lessonId, String studentId) {
         Course c = findCourseById(courseId);
         if (c == null) return false;
@@ -162,7 +172,7 @@ public class CourseManager {
         return true;
     }
 
-
+    // Take quiz
     public String takeQuiz(String courseId, String lessonId, String studentId, Map<Integer,Integer> answers){
         Course c = findCourseById(courseId);
         if (c==null) return null;
@@ -178,6 +188,7 @@ public class CourseManager {
             return null;
         }
 
+        // grade
         List<Question> qs = l.getQuiz().getQuestions();
         int correct = 0;
         for (int i=0;i<qs.size();i++){
@@ -185,12 +196,14 @@ public class CourseManager {
         }
         double percent = (correct * 100.0) / Math.max(1, qs.size());
 
+        // record attempts and best
         st.incrementAttempts(courseId, lessonId);
         st.updateBestScore(courseId, lessonId, (int)Math.round(percent));
 
+        // record in lesson statistics
         l.recordStudentQuizResult(studentId, correct, qs.size());
 
-
+        // display
         StringBuilder bd = new StringBuilder();
         bd.append("Result for lesson '" + l.getTitle() + "': " + correct + "/" + qs.size()+"\n");
         bd.append("Percentage: " + String.format("%.2f", percent) + "%"+"\n");
@@ -200,6 +213,7 @@ public class CourseManager {
 
         if (best >= PASS_PERCENT) st.markLessonCompleted(courseId, lessonId);
 
+        // check all lessons passed
         boolean allPassed = true;
         for (Lesson lesson : c.getLessons()){
             if (st.getBestScore(courseId, lesson.getLessonId()) < PASS_PERCENT) { allPassed = false; break; }
@@ -211,7 +225,7 @@ public class CourseManager {
                 Certificate cert = new Certificate(st.getUserId(), courseId);
                 st.addCertificate(cert);
                 c.addCertificate(st.getUserId(), cert);
-                bd.append(" Congratulations! Certificate generated: " + cert.getCertificateId());
+                bd.append("🎉 Congratulations! Certificate generated: " + cert.getCertificateId());
             }
         }
 
@@ -220,6 +234,7 @@ public class CourseManager {
         return bd.toString();
     }
 
+    // Statistics: per course
     public Map<String,Object> getCourseStatistics(String courseId) {
         Course c = findCourseById(courseId);
         if (c == null) return new HashMap<>();
@@ -232,3 +247,4 @@ public class CourseManager {
         return out;
     }
 }
+

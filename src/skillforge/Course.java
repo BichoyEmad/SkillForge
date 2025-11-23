@@ -6,9 +6,8 @@ package skillforge;
 
 /**
  *
- * @author hp
+ * @author root
  */
-// Course.java
 import java.util.*;
 
 public class Course {

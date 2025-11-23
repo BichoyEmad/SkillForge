@@ -8,7 +8,6 @@ package skillforge;
  *
  * @author root
  */
-// Student.java
 import java.util.*;
 
 public class Student extends User {
@@ -88,4 +87,9 @@ public class Student extends User {
     public Map<String, Map<String, Integer>> getAllAttempts() { return attemptsCount; }
     public Map<String, Map<String, Integer>> getAllBestScores() { return bestScores; }
 }
+
+
+
+
+
 

@@ -6,20 +6,16 @@ package skillforge;
 
 /**
  *
- * @author hp
+ * @author root
  */
-// JsonUtil.java
 import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
-
-import java.io.*;
 import java.lang.reflect.Type;
 import java.nio.file.*;
 import java.util.*;
 
-public class JSonUtil {
+public class JsonUtil {
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
-   
+
     public static <T> List<T> readList(String path, Type typeOfList) {
         try {
             Path p = Paths.get(path);
@@ -28,6 +24,7 @@ public class JSonUtil {
                 Files.write(p, "[]".getBytes());
             }
             String content = new String(Files.readAllBytes(p));
+            if (content.trim().isEmpty()) content = "[]";
             return gson.fromJson(content, typeOfList);
         } catch (Exception e) {
             e.printStackTrace();
@@ -36,9 +33,11 @@ public class JSonUtil {
     }
 
     public static <T> void writeList(String path, List<T> list) {
-        try (Writer writer = new FileWriter(path)) {
-            gson.toJson(list, writer);
-        } catch (IOException e) {
+        try {
+            Path p = Paths.get(path);
+            String json = gson.toJson(list);
+            Files.write(p, json.getBytes());
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
