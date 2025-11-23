@@ -12,35 +12,80 @@ package skillforge;
 import java.util.*;
 
 public class Student extends User {
-    // enrolledCourses: list of courseIds
-    private List<String> enrolledCourses = new ArrayList<>();
-    // progress: map courseId -> set of completed lessonIds
-    private Map<String, Set<String>> progress = new HashMap<>();
+    // completedLessons key = courseId::lessonId -> boolean
+    private Map<String, Boolean> completedLessons;
+    // attempts: courseId -> (lessonId -> attemptsUsed)
+    private Map<String, Map<String, Integer>> attemptsCount;
+    // bestScores: courseId -> (lessonId -> bestPercent)
+    private Map<String, Map<String, Integer>> bestScores;
+    private Set<String> enrolledCourses;
+    private List<Certificate> certificates;
 
-    public Student() { super(); }
+    public Student() {
+        super();
+        this.role = "student";
+        completedLessons = new HashMap<>();
+        attemptsCount = new HashMap<>();
+        bestScores = new HashMap<>();
+        enrolledCourses = new LinkedHashSet<>();
+        certificates = new ArrayList<>();
+    }
 
     public Student(String username, String email, String passwordHash) {
-        super("student", username, email, passwordHash);
+        super(username, email, passwordHash, "student");
+        completedLessons = new HashMap<>();
+        attemptsCount = new HashMap<>();
+        bestScores = new HashMap<>();
+        enrolledCourses = new LinkedHashSet<>();
+        certificates = new ArrayList<>();
     }
 
-    public List<String> getEnrolledCourses() { return enrolledCourses; }
-    public Map<String, Set<String>> getProgress() { return progress; }
-
-    public void enroll(String courseId) {
-        if (!enrolledCourses.contains(courseId)) {
-            enrolledCourses.add(courseId);
-            progress.putIfAbsent(courseId, new HashSet<>());
-        }
+    private String makeKey(String courseId, String lessonId) {
+        return courseId + "::" + lessonId;
     }
 
+    // enrollment
+    public void enroll(String courseId) { enrolledCourses.add(courseId); }
+    public Set<String> getEnrolledCourses() { return enrolledCourses; }
+
+    // mark completed
     public void markLessonCompleted(String courseId, String lessonId) {
-        progress.putIfAbsent(courseId, new HashSet<>());
-        progress.get(courseId).add(lessonId);
-        if (!enrolledCourses.contains(courseId)) enrolledCourses.add(courseId);
+        completedLessons.put(makeKey(courseId, lessonId), true);
     }
 
     public boolean isLessonCompleted(String courseId, String lessonId) {
-        return progress.containsKey(courseId) && progress.get(courseId).contains(lessonId);
+        return completedLessons.getOrDefault(makeKey(courseId, lessonId), false);
     }
+
+    // attempts management
+    public int getAttempts(String courseId, String lessonId) {
+        return attemptsCount.getOrDefault(courseId, Collections.emptyMap()).getOrDefault(lessonId, 0);
+    }
+
+    public void incrementAttempts(String courseId, String lessonId) {
+        attemptsCount.putIfAbsent(courseId, new HashMap<>());
+        Map<String,Integer> m = attemptsCount.get(courseId);
+        m.put(lessonId, m.getOrDefault(lessonId, 0) + 1);
+    }
+
+    // best score management
+    public void updateBestScore(String courseId, String lessonId, int percent) {
+        bestScores.putIfAbsent(courseId, new HashMap<>());
+        Map<String,Integer> m = bestScores.get(courseId);
+        int prev = m.getOrDefault(lessonId, 0);
+        if (percent > prev) m.put(lessonId, percent);
+    }
+
+    public int getBestScore(String courseId, String lessonId) {
+        return bestScores.getOrDefault(courseId, Collections.emptyMap()).getOrDefault(lessonId, 0);
+    }
+
+    // certificates
+    public void addCertificate(Certificate cert) { certificates.add(cert); }
+    public List<Certificate> getCertificates() { return certificates; }
+
+    // some optional helpers (not strictly necessary but useful)
+    public Map<String, Map<String, Integer>> getAllAttempts() { return attemptsCount; }
+    public Map<String, Map<String, Integer>> getAllBestScores() { return bestScores; }
 }
 
