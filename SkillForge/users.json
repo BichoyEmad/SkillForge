@@ -1,0 +1,27 @@
+[
+  {
+    "enrolledCourses": [
+      "72b31547-ce59-4619-9d8b-30167391fec6"
+    ],
+    "progress": {
+      "72b31547-ce59-4619-9d8b-30167391fec6": [
+        "d6e63b74-0cd2-4de9-a873-866d1116fce2"
+      ]
+    },
+    "userId": "df519b71-639c-4270-a1f3-6d2ef1c1412a",
+    "role": "student",
+    "username": "Fadmedh",
+    "email": "fadimedhat092@gmail.com",
+    "passwordHash": "beb78530e360b6afb5a7a72a2ce3b4d88e86603321168efdffd673927c9384d1"
+  },
+  {
+    "createdCourses": [
+      "72b31547-ce59-4619-9d8b-30167391fec6"
+    ],
+    "userId": "f5747f7c-ae80-4729-895b-c9105936bac9",
+    "role": "instructor",
+    "username": "Seif092",
+    "email": "seifzaki@gmail.com",
+    "passwordHash": "1e8febf9bd7822db59f3cd7969bc3dbda2586802dbacfe2b128537e8fbd56b42"
+  }
+]

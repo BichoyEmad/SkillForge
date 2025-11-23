@@ -1,0 +1,19 @@
+[
+  {
+    "courseId": "72b31547-ce59-4619-9d8b-30167391fec6",
+    "title": "java",
+    "description": "important java",
+    "instructorId": "f5747f7c-ae80-4729-895b-c9105936bac9",
+    "lessons": [
+      {
+        "lessonId": "d6e63b74-0cd2-4de9-a873-866d1116fce2",
+        "title": "oopConcepts",
+        "content": "encapsulation-abstraction",
+        "resources": []
+      }
+    ],
+    "students": [
+      "df519b71-639c-4270-a1f3-6d2ef1c1412a"
+    ]
+  }
+]
