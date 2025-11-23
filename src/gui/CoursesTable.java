@@ -13,7 +13,7 @@ public class CoursesTable extends JScrollPane {
     private JTable table;
     private final List<Course> courses;
     private final MainWindow mainWindow;
-    private static final String[] HEADER = {"Course ID", "Title", "Description"};
+    private static final String[] HEADER = {"Course ID", "Title", "Description", "Status"};
     
     public CoursesTable(MainWindow mainWindow, List<Course> courses) {
         super();
@@ -24,7 +24,7 @@ public class CoursesTable extends JScrollPane {
         for (int i=0;i<courses.size();i++) {
             Course s = courses.get(i);
             tableData[i] = new String[] {String.valueOf(s.getCourseId()),
-                s.getTitle(), s.getDescription()};
+                s.getTitle(), s.getDescription(), s.getApprovalStatus().toString()};
         }
         
         table = GUIHelpers.getFormattedTable(tableData, HEADER);
@@ -44,7 +44,7 @@ public class CoursesTable extends JScrollPane {
         for (int i=0;i<courses.size();i++) {
             Course s = courses.get(i);
             tableData[i] = new String[] {String.valueOf(s.getCourseId()),
-                s.getTitle(), s.getDescription()};
+                s.getTitle(), s.getDescription(), s.getApprovalStatus().toString()};
         }
         
         table = GUIHelpers.getFormattedTable(tableData, HEADER);

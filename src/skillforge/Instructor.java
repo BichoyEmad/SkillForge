@@ -8,22 +8,34 @@ package skillforge;
  *
  * @author root
  */
-// Instructor.java
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Instructor extends User {
-    private List<String> createdCourses = new ArrayList<>();
+    private List<String> createdCourses;
 
-    public Instructor() { super(); }
+    public Instructor() {
+        super();
+        this.role = "instructor";
+        createdCourses = new ArrayList<>();
+    }
 
     public Instructor(String username, String email, String passwordHash) {
-        super("instructor", username, email, passwordHash);
+        super(username, email, passwordHash, "instructor");
+        createdCourses = new ArrayList<>();
+    }
+
+    public void addCourseCreated(String courseId) {
+        if (!createdCourses.contains(courseId)) createdCourses.add(courseId);
+    }
+
+    public void removeCourseCreated(String courseId) {
+        createdCourses.remove(courseId);
     }
 
     public List<String> getCreatedCourses() { return createdCourses; }
-    public void addCourseCreated(String courseId) { createdCourses.add(courseId); }
-    public void removeCourseCreated(String courseId) { createdCourses.remove(courseId); }
 }
+
+
+
 
 

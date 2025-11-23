@@ -9,9 +9,11 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableModel;
 
 public class GUIHelpers {
 
@@ -44,6 +46,12 @@ public class GUIHelpers {
         return textField;
     }
 
+    public static JTextArea getFormattedTextArea() {
+        JTextArea are = new JTextArea();
+        are.setFont(new Font("Arial", Font.PLAIN, 16));
+        return are;
+    }
+
     public static JPasswordField getFormattedFormPasswordField() {
         JPasswordField textField = new JPasswordField();
         textField.setHorizontalAlignment(JTextField.CENTER);
@@ -73,7 +81,30 @@ public class GUIHelpers {
 
         return table;
     }
-    
+
+    public static JTable getFormattedTable(TableModel model) {
+        JTable table = new JTable(model);
+
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+
+        JTableHeader tableHeader = table.getTableHeader();
+        DefaultTableCellRenderer headerRenderer = (DefaultTableCellRenderer) tableHeader.getDefaultRenderer();
+        headerRenderer.setHorizontalAlignment(JLabel.CENTER);
+        tableHeader.setFont(tableHeader.getFont().deriveFont(Font.BOLD));
+        tableHeader.setBackground(Color.LIGHT_GRAY);
+        tableHeader.setForeground(Color.BLACK);
+
+        table.setRowHeight(25);
+        table.setGridColor(Color.LIGHT_GRAY);
+        table.setShowGrid(true);
+
+        return table;
+    }
+
     public static JComboBox getFormattedComboBox(String[] options) {
         JComboBox comboBox = new JComboBox(options);
         comboBox.setFont(new Font("Arial", Font.PLAIN, 16));

@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import skillforge.Admin;
 import skillforge.CourseManager;
 import skillforge.Instructor;
 import skillforge.Student;
@@ -62,6 +63,9 @@ public class Login extends JPanel {
                 } else if (logged instanceof Student) {
                     mainWindow.setPanel(new StudentDashboard(mainWindow,
                             userManager, courseManager, (Student) logged));
+                } else if (logged instanceof Admin) {
+                    mainWindow.setPanel(new AdminDashboard(mainWindow,
+                            userManager, courseManager, (Admin) logged));
                 }
             }
         }));

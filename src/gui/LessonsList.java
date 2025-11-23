@@ -25,17 +25,31 @@ public class LessonsList extends JPanel {
         LessonsTable lessonsTable = new LessonsTable(mainWindow, c.getLessons());
         add(lessonsTable, BorderLayout.CENTER);
 
-        JPanel bottomPanel = new JPanel(new GridLayout(1, 4, 15, 15));
+        JPanel bottomPanel = new JPanel(new GridLayout(1, 5, 15, 15));
         bottomPanel.setBackground(null);
         
         bottomPanel.add(GUIHelpers.getFormattedButton("New", (ActionEvent e) -> {
             mainWindow.setPanel(new AddLessonToCourse(mainWindow, instructor, userManager, courseManager, c));
         }));
         
+        bottomPanel.add(GUIHelpers.getFormattedButton("Create Quiz", (ActionEvent e) -> {
+            Lesson selectedLesson = lessonsTable.getSelected();
+            if (selectedLesson == null) return;
+            mainWindow.setPanel(new AddQuizToLesson(mainWindow, instructor, userManager, courseManager, c, selectedLesson));
+        }));
+        
         bottomPanel.add(GUIHelpers.getFormattedButton("Edit", (ActionEvent e) -> {
             Lesson selectedLesson = lessonsTable.getSelected();
             if (selectedLesson == null) return;
             mainWindow.setPanel(new UpdateLesson(mainWindow, instructor, userManager, courseManager, c, selectedLesson));
+        }));
+        
+        bottomPanel.add(GUIHelpers.getFormattedButton("Stats", (ActionEvent e) -> {
+            Lesson selectedLesson = lessonsTable.getSelected();
+            if (selectedLesson == null) return;
+            LessonStats frame = new LessonStats(selectedLesson.getStatistics());
+            frame.setLocationRelativeTo(mainWindow);
+            frame.setVisible(true);
         }));
         
         bottomPanel.add(GUIHelpers.getFormattedButton("Delete", (ActionEvent e) -> {

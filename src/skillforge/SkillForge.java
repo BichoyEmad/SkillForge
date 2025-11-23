@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
 package skillforge;
 
 import gui.MainWindow;
@@ -9,13 +5,10 @@ import gui.WelcomePanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-
 public class SkillForge {
-
     public static void main(String[] args) {
         UserManager um = new UserManager();
         CourseManager cm = new CourseManager(um);
-
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
@@ -26,5 +19,6 @@ public class SkillForge {
             mainWindow.setVisible(true);
         }
     }
-    
 }
+
+
